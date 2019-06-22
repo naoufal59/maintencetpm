@@ -1,0 +1,597 @@
+<!DOCTYPE html  >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="../static/img/apple-icon.png" th:href="@{/img/apple-icon.png}">
+  <link rel="icon" type="image/png" href="../static/img/favicon.png"  th:href="@{/img/favicon.png}">
+  <title>
+    Black Dashboard by Creative Tim
+  </title>
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <!-- Nucleo Icons -->
+  <link href="../static/css/nucleo-icons.css" rel="stylesheet"  th:href="@{/css/nucleo-icons.css}"/>
+  <!-- CSS Files -->
+  <link href="../static/css/black-dashboard.css?v=1.0.0" rel="stylesheet" th:href="@{/css/black-dashboard.css?v=1.0.0}" />
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link href="../static/demo/demo.css" rel="stylesheet"  th:href="@{/demo/demo.css}"/>
+  <style type="text/css">
+  .modal-body .form-horizontal .col-sm-2,
+.modal-body .form-horizontal .col-sm-10 {
+    width: 100%
+}
+
+.modal-body .form-horizontal .control-label {
+    text-align: left;
+}
+.modal-body .form-horizontal .col-sm-offset-2 {
+    margin-left: 15px;
+}
+  </style>
+</head>
+
+<body class="" onload="getdat();">
+  <div class="wrapper">
+    <div class="sidebar">
+      <!--
+        Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red"
+    -->
+      <div class="sidebar-wrapper">
+        <div class="logo">
+          <a href="javascript:void(0)" class="simple-text logo-mini">
+            TPM 
+          </a>
+          <a href="javascript:void(0)" class="simple-text logo-normal">
+           BOARD
+          </a>
+        </div>
+        <ul class="nav">
+          <li>
+            <a th:href="@{Vedio}">
+              <i class="tim-icons icon-atom"></i>
+              <p>Dashboard</p>
+            </a>
+          </li>
+          <li>
+            <a th:href="@{kpi}">
+              <i class="tim-icons icon-chart-pie-36"></i>
+              <p>KPI's correctifs</p>
+            </a>
+          </li>
+          <li>
+            <a th:href="@{index}">
+              <i class="tim-icons icon-pin"></i>
+              <p>Maintenance autonome</p>
+            </a>
+          </li>
+          <li class="active ">
+            <a th:href="@{anomalie}">
+              <i class="tim-icons icon-bell-55"></i>
+              <p>Chasses aux anomalies</p>
+            </a>
+          </li>
+          <li>
+            <a href="./user.html">
+              <i class="tim-icons icon-single-02"></i>
+              <p>User Profile</p>
+            </a>
+          </li>
+          <li>
+            <a th:href="@{preventive}">
+              <i class="tim-icons icon-puzzle-10"></i>
+              <p>Maintenance préventive</p>
+            </a>
+          </li>
+         
+        </ul>
+      </div>
+    </div>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+            <div class="navbar-toggle d-inline">
+              <button type="button" class="navbar-toggler">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+              </button>
+            </div>
+            <!-- <a class="navbar-brand" href="javascript:void(0)">Opérations</a>-->
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navigation">
+           <p id="demo" style="margin-left: 81.2em;margin-top: 1.4em;"></p>
+          </div>
+        </div>
+      </nav>
+      <div class="modal modal-search fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="SEARCH">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <i class="tim-icons icon-simple-remove"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Navbar -->
+     <div class="content">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card ">
+              <div class="card-header">
+                <h4 class="card-title"> Maintenance </h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table tablesorter " id="">
+                    <thead class=" text-primary">
+                      <tr>
+                        <th>
+                         Description
+                        </th>
+                        <th>
+                          Comment
+                        </th>
+                        <th>
+                         Pilot
+                        </th>
+                        <th >
+                         Equipement
+                        </th>
+                       
+                         
+                      </tr>
+                    </thead>
+                    <tbody>
+                    
+                       <tr th:each="e:${inValidMaintemnace}">
+                     <td    th:text="${e.description}">
+                      
+                        </td>
+                        <td   th:text="${e.comment}">
+                        
+                        </td>
+                       
+                         <td th:text="${e.pilot}">
+                        
+                        </td>
+                         <td th:text=" ${e.equipement.nom}">
+                        
+                        </td>
+                        
+                        <td>
+			        <!-- <a th:href="@{GotoTheTable(id=${e.idMaintenace})}"><i class="fa fa-thumbs-up"></i></a> -->
+                    <a th:href="@{solutionMaintenance(id=${e.idMaintenace})}"><i class="fa fa-thumbs-up"></i></a>
+   
+	
+                        </td>
+                        </tr>
+                  
+                          </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+           <div class="col-md-12">
+            <div class="card ">
+              <div class="card-header">
+                <h4 class="card-title"> anomalie </h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table tablesorter " id="">
+                    <thead class=" text-primary">
+                      <tr>
+                        <th>
+                         Description
+                        </th>
+                        
+                        <th >
+                        References
+                        </th>
+                       <th >
+                        type
+                        </th>
+                         
+                      </tr>
+                    </thead>
+                    <tbody>
+                    
+                       <tr th:each="e:${chasesAnomalie}">
+                     <td    th:text="${e.description}">
+                      
+                        </td>
+                        
+                         <td th:text=" ${e.Referrence}">
+                        
+                        </td>
+                         <td th:text=" ${e.typeAnomalie}">
+                        
+                        </td>
+                        <td>
+			         <!--   <a th:href="@{GotoTheTableAnomalie(id=${e.idAnomalie})}"><i class="fa fa-thumbs-up"></i></a> -->
+                  <a th:href="@{solutionAnomalie(id=${e.idAnomalie})}"><i class="fa fa-thumbs-up"></i></a>
+   
+	
+                        </td>
+                        </tr>
+                  
+                          </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-12">
+            <div class="card ">
+              <div class="card-header">
+                <h4 class="card-title"> maintenance preventive </h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table tablesorter " id="">
+                    <thead class=" text-primary">
+                      <tr>
+                        <th>
+                         nbSomaime
+                        </th>
+                        
+                        <th >
+                       action
+                        </th>
+                       <th >
+                       Equipement
+                        </th>
+                         
+                      </tr>
+                    </thead>
+                    <tbody>
+                    
+                       <tr th:each="e:${preventiveAction}">
+                     <td    th:text="${e.nbSomaime}">
+                      
+                        </td>
+                        
+                         <td th:text=" ${e.action}">
+                        
+                        </td>
+                         <td th:text=" ${e.equipement.nom}">
+                        
+                        </td>
+                        <td>
+			           <!-- <a th:href="@{GotoTheTablepreventivr(id=${e.idPreventive})}"><i class="fa fa-thumbs-up"></i></a>
+                   -->
+	<a th:href="@{solutionPreventivr(id=${e.idPreventive})}"><i class="fa fa-thumbs-up"></i></a>
+                        </td>
+                        </tr>
+                  
+                          </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+         <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="places-buttons">
+                  <div class="row">
+                    <div class="col-md-6 ml-auto mr-auto text-center">
+                      <h4 class="card-title">
+                        Exporte
+                       
+                      </h4>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-8 ml-auto mr-auto">
+                      <div class="row">
+                        <div class="col-md-4">
+                    <a href="CSVmaintenance/Maintenance.csv"><button class="btn btn-primary btn-block" > Maintenance.csv</button></a>
+                        </div>
+                        <div class="col-md-4">
+                      <a href="CSVpreventive/prevetive.csv"> <button class="btn btn-primary btn-block"  >prevetive.csv</button></a>
+                        </div>
+                       <div class="col-md-4">
+                      <a href="CSVanomalie/anomalie.csv"><button class="btn btn-primary btn-block"  >anomalie.csv</button></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+        
+          </div>
+        </div>
+      </div>
+        
+<script>
+  function  getdat(){
+var d = new Date();
+document.getElementById("demo").innerHTML = [d.getDate(),d.getMonth(),d.getFullYear()].join('/') +'  '+[d.getHours(),d.getMinutes(),d.getSeconds()].join(':');
+}
+</script>
+      <footer class="footer">
+        <div class="container-fluid">
+          <ul class="nav">
+            
+            <li class="nav-item">
+              <a href="javascript:void(0)" class="nav-link">
+                About Us
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="javascript:void(0)" class="nav-link">
+                Blog
+              </a>
+            </li>
+          </ul>
+          <div class="copyright">
+            ©
+            <script>
+              document.write(new Date().getFullYear())
+            </script> made with <i class="tim-icons icon-heart-2"></i> by
+            <a href="javascript:void(0)" target="_blank">afailal naoufal</a> for a better maintence.
+          </div>
+        </div>
+      </footer>
+    </div>
+ 
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Chercher par equipements</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form th:action="@{index}" method="post">
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Equipemts</label>
+            <select name="code" class="form-control" style="color: #25273a;">
+                   <option th:each="t:${equipemts}" th:text="${t.nom}" th:value="${t.id}" ></option>
+                    </select>
+                   <button type="submit" class="btn btn-primary">Chercher</button>
+          </div>
+         
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      
+      </div>
+    </div>
+  </div>
+</div> 
+ 
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModalNorm" tabindex="-1" role="dialog" 
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" 
+                   data-dismiss="modal">
+                       <span aria-hidden="true">&times;</span>
+                       <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                  Maintence autonome 
+                </h4>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="modal-body">
+                
+               <form th:action="save" method="post">
+                <div class="form-group">
+              
+                    <label >comment</label>
+                     <input type="text" class="form-control" name="comment" th:value="${Maintenace.comment}" style="color: #25273a;">
+                  </div>
+                  <div class="form-group">
+                    <label >pilot</label>
+                     <input type="text" class="form-control" name="pilot" th:value="${Maintenace.pilot}" style="color: #25273a;">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">description</label>
+                     <textarea  class="form-control" name="description" th:value="${Maintenace.description}" style="color: #25273a;"></textarea>
+                  </div>
+                  <div class="form-group">
+                  <label >Etat</label>
+                  <select class="form-control" name="Etat" style="color: #25273a;">
+						 <option value="true">Oui</option>
+                           <option value="false">Non</option>
+						</select>
+                  </div>
+                  <div class="checkbox">
+                    <label>
+						Equipements
+                    </label><br>
+                   <select name="code" class="form-control" style="color: #25273a;">
+                   <option th:each="t:${equipemts}" th:text="${t.nom}" th:value="${t.id}"></option>
+                    </select>
+                  </div>
+                 <input type="submit" value="Valider" class="btn btn-primary" />
+                  <button type="button" class="btn btn-default"
+                        data-dismiss="modal">
+                            Close
+                </button>
+               </form>
+                
+                
+            </div>
+            
+            <!-- Modal Footer -->
+           <!--  <div class="modal-footer" style="margin-left: 24.99999em;">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">
+                            Close
+                </button>
+                
+            </div> -->
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+ 
+  <!--   Core JS Files   -->
+  <script src="../js/core/jquery.min.js" th:href="@{/js/core/jquery.min.js}"></script>
+  <script src="../js/core/popper.min.js"  th:href="@{/js/core/popper.min.js}"></script>
+  <script src="../js/core/bootstrap.min.js"  th:href="@{/js/core/bootstrap.min.jss}"></script>
+  <script src="../js/plugins/perfect-scrollbar.jquery.min.js"   th:href="@{/js/plugins/perfect-scrollbar.jquery.min.js}"></script>
+  <!--  Google Maps Plugin    -->
+  <!-- Place this tag in your head or just before your close body tag. -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"  ></script>
+  <!-- Chart JS -->
+  <script src="../js/plugins/chartjs.min.js"  th:href="@{/js/plugins/chartjs.min.js}"></script>
+  <!--  Notifications Plugin    -->
+  <script src="../js/plugins/bootstrap-notify.js"  th:href="@{/js/plugins/bootstrap-notify.js}"></script>
+  <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="../js/black-dashboard.min.js?v=1.0.0"  th:href="@{/js/black-dashboard.min.js?v=1.0.0}"></script>
+  <!-- Black Dashboard DEMO methods, don't include it in your project! -->
+  <script src="../demo/demo.js" th:href="@{/demo/demo.js}"></script>
+  <script>
+    $(document).ready(function() {
+      $().ready(function() {
+        $sidebar = $('.sidebar');
+        $navbar = $('.navbar');
+        $main_panel = $('.main-panel');
+
+        $full_page = $('.full-page');
+
+        $sidebar_responsive = $('body > .navbar-collapse');
+        sidebar_mini_active = true;
+        white_color = false;
+
+        window_width = $(window).width();
+
+        fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
+
+
+
+        $('.fixed-plugin a').click(function(event) {
+          if ($(this).hasClass('switch-trigger')) {
+            if (event.stopPropagation) {
+              event.stopPropagation();
+            } else if (window.event) {
+              window.event.cancelBubble = true;
+            }
+          }
+        });
+
+        $('.fixed-plugin .background-color span').click(function() {
+          $(this).siblings().removeClass('active');
+          $(this).addClass('active');
+
+          var new_color = $(this).data('color');
+
+          if ($sidebar.length != 0) {
+            $sidebar.attr('data', new_color);
+          }
+
+          if ($main_panel.length != 0) {
+            $main_panel.attr('data', new_color);
+          }
+
+          if ($full_page.length != 0) {
+            $full_page.attr('filter-color', new_color);
+          }
+
+          if ($sidebar_responsive.length != 0) {
+            $sidebar_responsive.attr('data', new_color);
+          }
+        });
+
+        $('.switch-sidebar-mini input').on("switchChange.bootstrapSwitch", function() {
+          var $btn = $(this);
+
+          if (sidebar_mini_active == true) {
+            $('body').removeClass('sidebar-mini');
+            sidebar_mini_active = false;
+            blackDashboard.showSidebarMessage('Sidebar mini deactivated...');
+          } else {
+            $('body').addClass('sidebar-mini');
+            sidebar_mini_active = true;
+            blackDashboard.showSidebarMessage('Sidebar mini activated...');
+          }
+
+          // we simulate the window Resize so the charts will get updated in realtime.
+          var simulateWindowResize = setInterval(function() {
+            window.dispatchEvent(new Event('resize'));
+          }, 180);
+
+          // we stop the simulation of Window Resize after the animations are completed
+          setTimeout(function() {
+            clearInterval(simulateWindowResize);
+          }, 1000);
+        });
+
+        $('.switch-change-color input').on("switchChange.bootstrapSwitch", function() {
+          var $btn = $(this);
+
+          if (white_color == true) {
+
+            $('body').addClass('change-background');
+            setTimeout(function() {
+              $('body').removeClass('change-background');
+              $('body').removeClass('white-content');
+            }, 900);
+            white_color = false;
+          } else {
+
+            $('body').addClass('change-background');
+            setTimeout(function() {
+              $('body').removeClass('change-background');
+              $('body').addClass('white-content');
+            }, 900);
+
+            white_color = true;
+          }
+
+
+        });
+
+        $('.light-badge').click(function() {
+          $('body').addClass('white-content');
+        });
+
+        $('.dark-badge').click(function() {
+          $('body').removeClass('white-content');
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>

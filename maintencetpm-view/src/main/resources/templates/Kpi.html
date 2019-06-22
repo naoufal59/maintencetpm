@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="../static/img/apple-icon.png" th:href="@{/img/apple-icon.png}">
+  <link rel="icon" type="image/png" href="../static/img/favicon.png"  th:href="@{/img/favicon.png}">
+  <title>
+    Black Dashboard by Creative Tim
+  </title>
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <!-- Nucleo Icons -->
+  <link href="../static/css/nucleo-icons.css" rel="stylesheet"  th:href="@{/css/nucleo-icons.css}"/>
+  <!-- CSS Files -->
+  <link href="../static/css/black-dashboard.css?v=1.0.0" rel="stylesheet" th:href="@{/css/black-dashboard.css?v=1.0.0}" />
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link href="../static/demo/demo.css" rel="stylesheet"  th:href="@{/demo/demo.css}"/>
+</head>
+
+<body class="" onload="getdat();">
+  <div class="wrapper">
+    <div class="sidebar">
+      <!--
+        Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red"
+    -->
+      <div class="sidebar-wrapper">
+        <div class="logo">
+          <a href="javascript:void(0)" class="simple-text logo-mini">
+            TPM 
+          </a>
+          <a href="javascript:void(0)" class="simple-text logo-normal">
+           BOARD
+          </a>
+        </div>
+        <ul class="nav">
+          <li>
+            <a th:href="@{Vedio}">
+              <i class="tim-icons icon-atom"></i>
+              <p>Dashboard</p>
+            </a>
+          </li>
+          <li class="active ">
+            <a th:href="@{kpi}">
+              <i class="tim-icons icon-chart-pie-36"></i>
+              <p>KPI's correctifs</p>
+            </a>
+          </li>
+          <li>
+            <a th:href="@{index}">
+              <i class="tim-icons icon-pin"></i>
+              <p>Maintenance autonome</p>
+            </a>
+          </li>
+          <li >
+            <a th:href="@{anomalie}">
+              <i class="tim-icons icon-bell-55"></i>
+              <p>Chasses aux anomalies</p>
+            </a>
+          </li>
+          <li>
+            <a href="./user.html">
+              <i class="tim-icons icon-single-02"></i>
+              <p>User Profile</p>
+            </a>
+          </li>
+          <li>
+            <a th:href="@{preventive}">
+              <i class="tim-icons icon-puzzle-10"></i>
+              <p>Maintenance préventive</p>
+            </a>
+          </li>
+         
+        </ul>
+      </div>
+    </div>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+            <div class="navbar-toggle d-inline">
+              <button type="button" class="navbar-toggler">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+              </button>
+            </div>
+            <!-- <a class="navbar-brand" href="javascript:void(0)">Opérations</a>-->
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navigation">
+           <p id="demo" style="margin-left: 84.2em;margin-top: 1.4em;"></p>
+          </div>
+        </div>
+      </nav>
+      <div class="modal modal-search fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="SEARCH">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <i class="tim-icons icon-simple-remove"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="row">
+         <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="places-buttons">
+                  <div class="row">
+                    <div class="col-md-6 ml-auto mr-auto text-center">
+                      <h4 class="card-title">
+                        Opérations
+                       
+                      </h4>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-8 ml-auto mr-auto">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModalNorm" >Les Donnes</button>
+                        </div>
+                        <div class="col-md-6">
+                          <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#exampleModal" >equipement</button>
+                        </div>
+                       
+                      </div>
+                    </div>
+                  </div>
+                
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">MTTR</h4>
+              </div>
+             <div class="card-body">
+                <div class="chart-area">
+                  <div id="container"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">MTRF</h4>
+              </div>
+             <div class="card-body">
+                <div class="chart-area">
+                  <div id="containerMTR"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Dispo</h4>
+              </div>
+             <div class="card-body">
+                <div class="chart-area">
+                  <div id="containerdispo"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+         
+                 <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="places-buttons">
+                 
+                  <div class="row">
+                    <div class="col-lg-8 ml-auto mr-auto">
+                      <div class="row">
+                        <div class="col-md-6">
+                         <a th:href="@{tech}"> <button 
+                           th:class="${isGotSomthing} ? 'btn btn-danger btn-block' : 'btn btn-primary btn-block'" th:text="${isGotSomthing}?  isGotSomthing : tech"
+                           > tech</button></a>
+                        </div>
+                          <div class="col-md-6">
+                          <button class="btn btn-primary btn-block" >Equipements</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        <script  type="text/javascript"> 
+
+      function changevid(buttonlink) { 
+          document.getElementById('change').src = buttonlink;
+      }
+
+</script>
+<script>
+  function  getdat(){
+var d = new Date();
+document.getElementById("demo").innerHTML = [d.getDate(),d.getMonth(),d.getFullYear()].join('/') +'  '+[d.getHours(),d.getMinutes(),d.getSeconds()].join(':');
+}
+</script>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Chercher par equipements</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form th:action="@{kpi}" method="post">
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Equipemts</label>
+            <select name="code" class="form-control" style="color: #25273a;">
+                   <option th:each="t:${equipemts}" th:text="${t.nom}" th:value="${t.id}" ></option>
+                    </select>
+                   <button type="submit" class="btn btn-primary">Chercher</button>
+          </div>
+         
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      
+      </div>
+    </div>
+  </div>
+</div> 
+<div class="modal fade" id="myModalNorm" tabindex="-1" role="dialog" 
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" 
+                   data-dismiss="modal">
+                       <span aria-hidden="true">&times;</span>
+                       <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                 anomalie
+                </h4>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="modal-body">
+                
+               <form th:action="saveMtr" method="post">
+                 <div class="form-group">
+                    <label for="exampleInputEmail1">somaine</label>
+                     <input  class="form-control" name="somaine" th:value="${Kpi.somaine}" style="color: #25273a;">
+                  </div>
+                  <div class="form-group">
+                  <label >MTTR</label>
+                  <input class="form-control" name="MTTR" style="color: #25273a;" th:value="${Kpi.MTTR}">
+						 
+                  </div>
+                  <div class="form-group">
+                  <label >MTRF</label>
+                  <input class="form-control" name="MTRF" style="color: #25273a;" th:value="${Kpi.MTRF}">
+						 
+                  </div>
+                  <div class="form-group">
+                  <label >DISPO</label>
+                  <input class="form-control" name="disbo" style="color: #25273a;" th:value="${Kpi.disbo}">
+						 
+                  </div>
+                  <div class="checkbox">
+                    <label>
+						Equipements
+                    </label><br>
+                   <select name="code" class="form-control" style="color: #25273a;">
+                   <option th:each="t:${equipemts}" th:text="${t.nom}" th:value="${t.id}"></option>
+                    </select>
+                  </div>
+                 <input type="submit" value="Valider" class="btn btn-primary" />
+                  <button type="button" class="btn btn-default"
+                        data-dismiss="modal">
+                            Close
+                </button>
+               </form>
+                
+                
+            </div>
+            
+            <!-- Modal Footer -->
+           <!--  <div class="modal-footer" style="margin-left: 24.99999em;">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">
+                            Close
+                </button>
+                
+            </div> -->
+        </div>
+    </div>
+</div>
+
+      <footer class="footer">
+        <div class="container-fluid">
+          <ul class="nav">
+            
+            <li class="nav-item">
+              <a href="javascript:void(0)" class="nav-link">
+                About Us
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="javascript:void(0)" class="nav-link">
+                Blog
+              </a>
+            </li>
+          </ul>
+          <div class="copyright">
+            ©
+            <script>
+              document.write(new Date().getFullYear())
+            </script> made with <i class="tim-icons icon-heart-2"></i> by
+            <a href="javascript:void(0)" target="_blank">afailal naoufal</a> for a better maintence.
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+  
+  <script src="../js/core/jquery.min.js" th:href="@{/js/core/jquery.min.js}"></script>
+  <script src="../js/core/popper.min.js"  th:href="@{/js/core/popper.min.js}"></script>
+  <script src="../js/core/bootstrap.min.js"  th:href="@{/js/core/bootstrap.min.jss}"></script>
+  <script src="../js/plugins/perfect-scrollbar.jquery.min.js"   th:href="@{/js/plugins/perfect-scrollbar.jquery.min.js}"></script>
+  <!--  Google Maps Plugin    -->
+  <!-- Place this tag in your head or just before your close body tag. -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"  ></script>
+  <!-- Chart JS -->
+  <script src="../js/plugins/chartjs.min.js"  th:href="@{/js/plugins/chartjs.min.js}"></script>
+  <!--  Notifications Plugin    -->
+  <script src="../js/plugins/bootstrap-notify.js"  th:href="@{/js/plugins/bootstrap-notify.js}"></script>
+  <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="../js/black-dashboard.min.js?v=1.0.0"  th:href="@{/js/black-dashboard.min.js?v=1.0.0}"></script>
+  <!-- Black Dashboard DEMO methods, don't include it in your project! -->
+  <script src="../demo/demo.js" th:href="@{/demo/demo.js}"></script>
+  <script>
+    $(document).ready(function() {
+      $().ready(function() {
+        $sidebar = $('.sidebar');
+        $navbar = $('.navbar');
+        $main_panel = $('.main-panel');
+
+        $full_page = $('.full-page');
+
+        $sidebar_responsive = $('body > .navbar-collapse');
+        sidebar_mini_active = true;
+        white_color = false;
+
+        window_width = $(window).width();
+
+        fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
+
+
+
+        $('.fixed-plugin a').click(function(event) {
+          if ($(this).hasClass('switch-trigger')) {
+            if (event.stopPropagation) {
+              event.stopPropagation();
+            } else if (window.event) {
+              window.event.cancelBubble = true;
+            }
+          }
+        });
+
+        $('.fixed-plugin .background-color span').click(function() {
+          $(this).siblings().removeClass('active');
+          $(this).addClass('active');
+
+          var new_color = $(this).data('color');
+
+          if ($sidebar.length != 0) {
+            $sidebar.attr('data', new_color);
+          }
+
+          if ($main_panel.length != 0) {
+            $main_panel.attr('data', new_color);
+          }
+
+          if ($full_page.length != 0) {
+            $full_page.attr('filter-color', new_color);
+          }
+
+          if ($sidebar_responsive.length != 0) {
+            $sidebar_responsive.attr('data', new_color);
+          }
+        });
+
+        $('.switch-sidebar-mini input').on("switchChange.bootstrapSwitch", function() {
+          var $btn = $(this);
+
+          if (sidebar_mini_active == true) {
+            $('body').removeClass('sidebar-mini');
+            sidebar_mini_active = false;
+            blackDashboard.showSidebarMessage('Sidebar mini deactivated...');
+          } else {
+            $('body').addClass('sidebar-mini');
+            sidebar_mini_active = true;
+            blackDashboard.showSidebarMessage('Sidebar mini activated...');
+          }
+
+          // we simulate the window Resize so the charts will get updated in realtime.
+          var simulateWindowResize = setInterval(function() {
+            window.dispatchEvent(new Event('resize'));
+          }, 180);
+
+          // we stop the simulation of Window Resize after the animations are completed
+          setTimeout(function() {
+            clearInterval(simulateWindowResize);
+          }, 1000);
+        });
+
+        $('.switch-change-color input').on("switchChange.bootstrapSwitch", function() {
+          var $btn = $(this);
+
+          if (white_color == true) {
+
+            $('body').addClass('change-background');
+            setTimeout(function() {
+              $('body').removeClass('change-background');
+              $('body').removeClass('white-content');
+            }, 900);
+            white_color = false;
+          } else {
+
+            $('body').addClass('change-background');
+            setTimeout(function() {
+              $('body').removeClass('change-background');
+              $('body').addClass('white-content');
+            }, 900);
+
+            white_color = true;
+          }
+
+
+        });
+
+        $('.light-badge').click(function() {
+          $('body').addClass('white-content');
+        });
+
+        $('.dark-badge').click(function() {
+          $('body').removeClass('white-content');
+        });
+      });
+    });
+  </script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script th:inline="javascript">
+    $(function(){
+    Highcharts.chart('container', {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'Technology '
+        },
+        subtitle: {
+            text: 'All Details is not true its a dummy Map'
+        },
+        xAxis: {
+            categories: [[${surveyMap.keySet()}]],
+            crosshair: true
+        },
+        yAxis: {
+            min: 0,
+            max:10,
+            title: {
+                text: 'Technology rating [in %]'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} K</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: 'MTTR',
+            data: [[${surveyMap.values()}]]
+        },
+        {
+            name: 'objective',
+            data: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+        }
+        ]
+    });
+    console.log( [[${surveyMap.keySet()}]]);
+    });
+</script>
+<script th:inline="javascript">
+    $(function(){
+    Highcharts.chart('containerMTR', {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'Technology '
+        },
+        subtitle: {
+            text: 'All Details is not true its a dummy Map'
+        },
+        xAxis: {
+            categories: [[${surveyMapMtrf.keySet()}]],
+            crosshair: true
+        },
+        yAxis: {
+            min: 10,
+            max: 60,
+            title: {
+                text: 'Technology rating [in %]'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} K</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: 'MTRF',
+            data: [[${surveyMapMtrf.values()}]]
+        },
+        {
+            name: 'objective',
+            data: [22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5,22.5]
+        }
+        ]
+    });
+    console.log( [[${surveyMapMtrf.keySet()}]]);
+    });
+</script>
+<script th:inline="javascript">
+    $(function(){
+    Highcharts.chart('containerdispo', {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'Technology '
+        },
+        subtitle: {
+            text: 'All Details is not true its a dummy Map'
+        },
+        xAxis: {
+            categories: [[${surveyMapdispo.keySet()}]],
+            crosshair: true
+        },
+        yAxis: {
+            min: 70,
+            max:100,
+            title: {
+                text: 'Technology rating [in %]'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} K</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: 'DISPO',
+            data: [[${surveyMapdispo.values()}]]
+        },
+        {
+            name: 'objective',
+            data: [95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95]
+        }
+        ]
+    });
+    console.log( [[${surveyMapdispo.keySet()}]]);
+    });
+</script>
+</body>
+
+</html>
